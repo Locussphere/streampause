@@ -15,8 +15,8 @@
   "screens": [
     {
       "name": "Cyber Grid",
-      "meta": "Dark · Neon green · Animated",
-      "tags": ["cyberpunk", "dark", "animated"],
+      "meta": "light.calm.lofi",
+      "tags": ["animated","lofi","calm"],
       "url": "https://locussphere.github.io/streampause/screens/loficalm"
     }
   ]
