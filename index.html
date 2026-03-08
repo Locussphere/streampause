@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StreamPause — BRB Screens for Streamers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ── NAV ─────────────────────────────────── -->
+  <nav>
+    <div class="logo">Stream<span>Pause</span></div>
+    <div class="nav-badge">✦ Free BRB Screens</div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-tag">Free for streamers</div>
+    <h1>Your stream<br/>deserves a<br/><em>real break</em></h1>
+    <p class="hero-sub">Loading...</p>
+    <div class="hero-cta">
+      <a href="#screens" class="btn-primary">
+        Browse Screens
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="#how" class="btn-ghost">
+        How to use
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 8v4M12 16h.01"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── STATS ────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">—</span><div class="stat-label">BRB Screens</div></div>
+    <div class="stat"><span class="stat-num">—</span><div class="stat-label">Free to Use</div></div>
+    <div class="stat"><span class="stat-num">—</span><div class="stat-label">Stream Apps</div></div>
+    <div class="stat"><span class="stat-num">—</span><div class="stat-label">Setup Hassle</div></div>
+  </div>
+
+  <!-- ── SCREENS GALLERY ──────────────────────── -->
+  <div class="section" id="screens">
+    <div class="reveal">
+      <div class="section-label">✦ The collection</div>
+      <h2 class="section-title">Pick your vibe,<br/>drop it in OBS</h2>
+      <p class="section-sub">Every screen is a live webpage — just paste the URL into a Browser Source and you're live.</p>
+    </div>
+    <div class="cards-grid reveal" id="cardsGrid">
+      <!-- Cards injected by app.js after loading screens.json -->
+    </div>
+  </div>
+
+  <!-- ── HOW IT WORKS ─────────────────────────── -->
+  <div class="section" id="how">
+    <div class="reveal">
+      <div class="section-label">✦ How it works</div>
+      <h2 class="section-title">Three steps,<br/>zero effort</h2>
+      <p class="section-sub">No installs, no accounts, no drama. These are just web pages.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Pick a screen</div>
+        <div class="step-desc">Browse the collection above and find the vibe that matches your stream style.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Copy the link</div>
+        <div class="step-desc">Click the copy icon on any card to grab the direct URL to that BRB screen.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Add to OBS</div>
+        <div class="step-desc">In OBS, add a Browser Source, paste the link, set it to 1920×1080 — you're done.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Go on break</div>
+        <div class="step-desc">Switch to your BRB scene whenever you need a moment. Your viewers will love it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL ────────────────────────────────── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-inner">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" id="modalClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+        Close preview
+      </button>
+      <iframe id="modalIframe" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ───────────────────────────────── -->
+  <footer>
+    <div class="footer-logo">Stream<span>Pause</span></div>
+    <div class="footer-info">
+      <div class="claude-badge">Built with <span>Claude</span> ✦ Anthropic</div>
+      <span class="footer-tagline">Free forever for streamers</span>
+    </div>
+    <div class="footer-authors">
+      by
+      <a href="https://github.com/locussphere" target="_blank" rel="noopener" class="author-link">LocusSphere</a>
+      <span class="author-sep">&</span>
+      <a href="https://github.com/Abhinav-dev17" target="_blank" rel="noopener" class="author-link">Abhinav</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

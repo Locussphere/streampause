@@ -1,0 +1,23 @@
+{
+  "site": {
+    "title": "StreamPause",
+    "tagline": "Free for streamers",
+    "description": "Hand-crafted BRB screens built for OBS, Streamlabs, and any streaming app. Just copy the link, drop it into your browser source — done.",
+    "badge": "✦ Free BRB Screens",
+    "footer": "Free forever for streamers"
+  },
+  "stats": [
+    { "value": "6+",   "label": "BRB Screens" },
+    { "value": "100%", "label": "Free to Use" },
+    { "value": "OBS",  "label": "& All Stream Apps" },
+    { "value": "0px",  "label": "Setup Hassle" }
+  ],
+  "screens": [
+    {
+      "name": "Cyber Grid",
+      "meta": "Dark · Neon green · Animated",
+      "tags": ["cyberpunk", "dark", "animated"],
+      "url": "brbscreen.html"
+    }
+  ]
+}
