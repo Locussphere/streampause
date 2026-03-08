@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BRB – Lofi Break</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Serif+Display&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{width:100vw;height:100vh;overflow:hidden;font-family:'DM Mono',monospace;background:#f5f0e8;}
+
+/* ===================== SCENE ===================== */
+#scene{position:fixed;inset:0;z-index:0;transition:opacity 1.8s ease;}
+
+/* Grain overlay - light */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.5;pointer-events:none;z-index:200;
+}
+
+/* Scanlines - very subtle for light */
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:199;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 6px);}
+
+/* Scene overlay - light vignette */
+.scene-overlay{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(240,230,210,0.35) 100%);}
+
+/* ===================== SCENE 1: RAINY WINDOW (LIGHT) ===================== */
+.s-rain{background:linear-gradient(180deg,#c8d8e8 0%,#dce8f0 30%,#e8f0f5 60%,#f0f5f8 100%);position:relative;overflow:hidden;}
+.rw-sky{position:absolute;top:0;left:0;right:0;height:55%;background:linear-gradient(180deg,#8aaabb 0%,#b8ccd8 50%,#d0e0ea 100%);}
+.rw-cloud{position:absolute;border-radius:50px;background:rgba(255,255,255,0.7);filter:blur(12px);animation:cloudDrift var(--cd) linear infinite;animation-delay:var(--cdelay);}
+@keyframes cloudDrift{from{transform:translateX(-300px);}to{transform:translateX(110vw);}}
+.rw-building{position:absolute;bottom:0;}
+.rw-win{position:absolute;background:rgba(255,240,180,0.6);animation:winBlink var(--wb) ease-in-out infinite;animation-delay:var(--wbd);}
+@keyframes winBlink{0%,100%{opacity:0.6;}50%{opacity:0.15;}}
+.rw-road{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(180deg,#8a9090,#707878);}
+.rw-road-line{position:absolute;bottom:50px;left:0;right:0;height:3px;background:rgba(255,255,255,0.2);}
+.rw-puddle{position:absolute;border-radius:50%;background:linear-gradient(135deg,rgba(180,200,220,0.5),rgba(160,180,210,0.3));animation:puddle 4s ease-in-out infinite alternate;}
+@keyframes puddle{from{transform:scaleX(1);}to{transform:scaleX(1.08);}}
+.rw-rain{position:absolute;inset:0;overflow:hidden;}
+.rw-drop{position:absolute;top:-20px;width:1px;background:linear-gradient(180deg,transparent,rgba(160,190,220,0.7));animation:fall var(--rd) linear infinite;animation-delay:var(--rdelay);left:var(--rl);height:var(--rh);}
+@keyframes fall{to{transform:translateY(110vh);}}
+/* Window frame */
+.rw-frame{position:absolute;inset:0;}
+.rw-frame-h{position:absolute;top:50%;left:0;right:0;height:10px;background:rgba(210,200,180,0.95);transform:translateY(-50%);box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.rw-frame-v{position:absolute;left:50%;top:0;bottom:0;width:10px;background:rgba(210,200,180,0.95);transform:translateX(-50%);box-shadow:2px 0 8px rgba(0,0,0,0.1);}
+.rw-frame-border{position:absolute;inset:0;border:14px solid rgba(210,200,180,0.95);box-shadow:inset 0 0 30px rgba(0,0,0,0.08);}
+/* Windowsill */
+.rw-sill{position:absolute;bottom:0;left:0;right:0;height:30px;background:rgba(210,200,180,0.95);box-shadow:0 -2px 12px rgba(0,0,0,0.1);}
+.rw-plant{position:absolute;bottom:30px;right:60px;font-size:32px;filter:drop-shadow(2px 2px 4px rgba(0,0,0,0.15));}
+.rw-mug{position:absolute;bottom:30px;left:60px;font-size:26px;filter:drop-shadow(2px 2px 4px rgba(0,0,0,0.15));}
+
+/* ===================== SCENE 2: COZY CAFE (LIGHT) ===================== */
+.s-cafe{background:linear-gradient(180deg,#f5e8d0 0%,#f0dfc0 50%,#e8d4b0 100%);position:relative;overflow:hidden;}
+.cafe-wall-tex{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(180,140,90,0.04) 0px,rgba(180,140,90,0.04) 1px,transparent 1px,transparent 60px),repeating-linear-gradient(0deg,rgba(180,140,90,0.04) 0px,rgba(180,140,90,0.04) 1px,transparent 1px,transparent 60px);}
+.cafe-warm{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,rgba(255,200,100,0.12),transparent 60%),radial-gradient(ellipse at 70% 60%,rgba(255,160,60,0.08),transparent 55%);}
+.cafe-win-outer{position:absolute;background:rgba(200,160,100,0.9);border-radius:4px;padding:10px;}
+.cafe-win-inner{border-radius:2px;overflow:hidden;position:relative;}
+.cafe-win-sky{background:linear-gradient(180deg,#7090a8,#90aabb);}
+.cafe-win-rain-drop{position:absolute;top:-10px;width:1px;background:linear-gradient(180deg,transparent,rgba(160,190,220,0.6));animation:fall var(--rd) linear infinite;animation-delay:var(--rdelay);left:var(--rl);height:var(--rh);}
+.cafe-table{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#c8a060,#a07838);border-radius:4px 4px 0 0;}
+.cafe-book{position:absolute;bottom:0;}
+.steam-p{position:absolute;width:3px;border-radius:50%;background:rgba(200,200,200,0.5);animation:steamRise 2.5s ease-in infinite;opacity:0;animation-delay:var(--sd);}
+@keyframes steamRise{0%{opacity:0;transform:translateY(0) scaleX(1);}30%{opacity:0.6;}100%{opacity:0;transform:translateY(-50px) scaleX(4);}}
+.fairy-line{position:absolute;height:1px;background:rgba(150,120,60,0.3);}
+.fairy-bulb{position:absolute;border-radius:50%;background:rgba(255,220,80,0.9);box-shadow:0 0 8px rgba(255,200,60,0.7);animation:fBlink var(--ff) ease-in-out infinite;animation-delay:var(--fd);}
+@keyframes fBlink{0%,100%{opacity:0.9;}50%{opacity:0.3;}}
+
+/* ===================== SCENE 3: CITY ROOFTOP (LIGHT/DUSK) ===================== */
+.s-rooftop{background:linear-gradient(180deg,#f0c090 0%,#e8a060 25%,#d06030 50%,#a03020 75%,#602010 100%);position:relative;overflow:hidden;}
+.rt-sun{position:absolute;border-radius:50%;background:radial-gradient(circle,#fff5c0,#ffcc44,#ff8800);box-shadow:0 0 60px rgba(255,180,50,0.6),0 0 120px rgba(255,140,30,0.3);}
+.rt-cloud{position:absolute;border-radius:50px;background:rgba(255,200,150,0.5);filter:blur(15px);animation:cloudDrift var(--cd) linear infinite;animation-delay:var(--cdelay);}
+.rt-building{position:absolute;bottom:0;}
+.rt-win{position:absolute;animation:winBlink var(--wb) ease-in-out infinite;animation-delay:var(--wbd);}
+.rt-floor{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#2a1810,#180c08);}
+.rt-edge{position:absolute;left:0;right:0;background:#3a2418;}
+.rt-antenna{position:absolute;}
+.rt-rain{position:absolute;inset:0;overflow:hidden;}
+.rt-drop{position:absolute;top:-20px;width:1px;background:linear-gradient(180deg,transparent,rgba(255,200,150,0.4));animation:fall var(--rd) linear infinite;animation-delay:var(--rdelay);left:var(--rl);height:var(--rh);}
+.city-glow-rt{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(180deg,transparent,rgba(255,100,30,0.1));}
+
+/* ===================== SCENE 4: JAPANESE STREET (LIGHT/DAY) ===================== */
+.s-japan{background:linear-gradient(180deg,#c8e0f0 0%,#d8eaf5 40%,#e8f4f8 100%);position:relative;overflow:hidden;}
+.jp-sky{position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg,#7aaac8 0%,#a8ccde 50%,#c8e0f0 100%);}
+.jp-cloud{position:absolute;border-radius:50px;background:rgba(255,255,255,0.85);filter:blur(10px);animation:cloudDrift var(--cd) linear infinite;animation-delay:var(--cdelay);}
+.jp-mt{position:absolute;}
+.jp-road-day{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#c0c8c0,#a8b0a8);}
+.jp-building-day{position:absolute;bottom:0;}
+.jp-roof-day{position:absolute;width:0;height:0;border-style:solid;}
+.jp-tree{position:absolute;font-size:var(--ts);}
+.jp-tree-anim{animation:treeSway 4s ease-in-out infinite;animation-delay:var(--ta);transform-origin:bottom center;}
+@keyframes treeSway{0%,100%{transform:rotate(-1deg);}50%{transform:rotate(1deg);}}
+.jp-lantern-day{position:absolute;animation:lanternSway 4s ease-in-out infinite;animation-delay:var(--ld);}
+@keyframes lanternSway{0%,100%{transform:rotate(-4deg);}50%{transform:rotate(4deg);}}
+.jp-torii-day{position:absolute;}
+.jp-sign-day{position:absolute;writing-mode:vertical-rl;letter-spacing:2px;font-size:10px;padding:5px 7px;border-radius:2px;}
+.jp-petal{position:absolute;font-size:var(--ps);animation:petalFall var(--pd) ease-in infinite;animation-delay:var(--pdelay);top:-30px;left:var(--pl);opacity:0;}
+@keyframes petalFall{0%{opacity:0;transform:translateY(0) rotate(0deg);}10%{opacity:1;}90%{opacity:0.6;}100%{opacity:0;transform:translateY(105vh) rotate(720deg);}}
+.jp-rain-day{position:absolute;inset:0;overflow:hidden;}
+.jp-drop-day{position:absolute;top:-20px;width:1px;background:linear-gradient(180deg,transparent,rgba(160,190,220,0.5));animation:fall var(--rd) linear infinite;animation-delay:var(--rdelay);left:var(--rl);height:var(--rh);}
+
+/* ===================== UI ===================== */
+#sceneBar{position:fixed;top:0;left:0;height:3px;z-index:60;background:rgba(0,0,0,0.2);transition:width 1s linear;border-radius:0 2px 2px 0;}
+#sceneLabel{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;font-family:'Caveat',cursive;font-size:14px;letter-spacing:4px;color:rgba(80,60,40,0.6);text-transform:uppercase;background:rgba(255,255,255,0.4);padding:4px 16px;border-radius:20px;backdrop-filter:blur(8px);}
+
+.main{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:130px;}
+
+/* Live Clock */
+#clock{
+  font-family:'DM Serif Display',serif;
+  font-size:96px;
+  color:rgba(50,35,20,0.85);
+  letter-spacing:4px;
+  text-shadow:0 2px 20px rgba(255,255,255,0.8),0 4px 40px rgba(200,160,100,0.3);
+  margin-bottom:4px;
+  line-height:1;
+  animation:clockPulse 1s ease-in-out infinite;
+}
+@keyframes clockPulse{0%,100%{opacity:1;}49%{opacity:1;}50%{opacity:0.7;}51%{opacity:1;}}
+#clock-date{
+  font-family:'Caveat',cursive;
+  font-size:20px;
+  color:rgba(80,60,40,0.65);
+  letter-spacing:3px;
+  margin-bottom:28px;
+  text-shadow:0 1px 8px rgba(255,255,255,0.8);
+}
+
+/* Vinyl */
+.vinyl-wrap{margin-bottom:20px;position:relative;display:flex;align-items:center;justify-content:center;}
+.vinyl-glow{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--vglow,rgba(200,150,80,0.4)),transparent 70%);animation:glowPulse 2.5s ease-in-out infinite;filter:blur(18px);transition:background 2s;}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.25);opacity:1;}}
+.vinyl{width:90px;height:90px;border-radius:50%;background:conic-gradient(#2a1f14 0deg,#3a2c1e 30deg,#2a1f14 60deg,#3a2c1e 90deg,#2a1f14 120deg,#3a2c1e 150deg,#2a1f14 180deg,#3a2c1e 210deg,#2a1f14 240deg,#3a2c1e 270deg,#2a1f14 300deg,#3a2c1e 330deg,#2a1f14 360deg);border:3px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.vinyl.spinning{animation:spin 4s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.vinyl-center{width:28px;height:28px;border-radius:50%;background:conic-gradient(#d4a060,#b07830,#e8c080,#d4a060);box-shadow:0 0 10px rgba(200,150,80,0.6);}
+
+/* BRB label */
+.brb-label{font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:rgba(50,35,20,0.85);text-shadow:0 2px 20px rgba(255,255,255,0.9),0 4px 40px rgba(200,150,80,0.2);margin-bottom:4px;line-height:1;}
+.brb-sub{font-family:'Caveat',cursive;font-size:19px;color:rgba(100,75,50,0.7);margin-bottom:22px;letter-spacing:2px;}
+
+/* Card */
+.card{background:rgba(255,252,245,0.55);border:1px solid rgba(200,180,140,0.4);border-radius:24px;padding:28px 44px;text-align:center;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(150,100,50,0.15),inset 0 1px 0 rgba(255,255,255,0.8);min-width:380px;}
+
+/* Song bar */
+.song-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 14px;background:rgba(255,250,240,0.6);border-radius:12px;border:1px solid rgba(200,170,120,0.3);}
+.song-icon{font-size:15px;animation:iconBounce 0.5s ease-in-out infinite alternate;}
+@keyframes iconBounce{from{transform:scale(1);}to{transform:scale(1.2);}}
+.song-info{flex:1;text-align:left;overflow:hidden;}
+.song-name{font-family:'Caveat',cursive;font-size:16px;color:rgba(60,40,20,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.song-count{font-size:9px;color:rgba(120,90,60,0.5);letter-spacing:2px;margin-top:1px;}
+
+/* Upload */
+.setup{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.setup-hint{font-family:'Caveat',cursive;font-size:18px;color:rgba(100,75,50,0.7);letter-spacing:2px;}
+.upload-area{width:100%;padding:14px;border:1.5px dashed rgba(180,140,80,0.4);border-radius:14px;background:rgba(255,248,235,0.5);cursor:pointer;transition:all 0.2s;position:relative;}
+.upload-area:hover{border-color:rgba(180,120,40,0.6);background:rgba(255,240,210,0.6);}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-txt{font-family:'Caveat',cursive;font-size:16px;color:rgba(120,85,45,0.8);letter-spacing:1px;}
+.upload-sub{font-size:9px;color:rgba(150,110,70,0.5);letter-spacing:2px;margin-top:3px;}
+.file-list{margin-top:8px;display:flex;flex-direction:column;gap:4px;max-height:70px;overflow-y:auto;}
+.file-item{font-family:'Caveat',cursive;font-size:13px;color:rgba(120,80,40,0.8);background:rgba(200,160,100,0.15);padding:3px 10px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.start-btn{padding:14px 44px;background:linear-gradient(135deg,#c87830,#a05a18);border:none;border-radius:50px;color:white;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:3px;cursor:pointer;box-shadow:0 8px 25px rgba(180,100,30,0.35);transition:all 0.25s;}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(180,100,30,0.45);}
+.start-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+
+.ctrls{display:flex;gap:8px;justify-content:center;margin-top:6px;flex-wrap:wrap;}
+.c-btn{padding:9px 18px;border-radius:50px;border:1px solid rgba(180,140,80,0.3);background:rgba(255,248,235,0.5);color:rgba(100,70,35,0.8);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
+.c-btn:hover{background:rgba(220,180,120,0.3);border-color:rgba(180,120,40,0.5);color:rgba(80,50,20,0.9);}
+
+.done-msg{font-family:'Caveat',cursive;font-size:34px;font-weight:700;color:rgba(50,120,60,0.9);text-shadow:0 2px 15px rgba(100,200,100,0.3);animation:doneBounce 1.5s ease-in-out infinite;margin-bottom:18px;}
+@keyframes doneBounce{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+
+/* ===================== VISUALIZER ===================== */
+#visualizer{position:fixed;bottom:0;left:0;right:0;height:120px;z-index:20;display:flex;align-items:flex-end;justify-content:center;gap:2px;padding:0 10px 8px;pointer-events:none;}
+.bar{flex:1;max-width:16px;min-height:3px;border-radius:4px 4px 0 0;background:var(--bar-color,linear-gradient(to top,rgba(180,120,60,0.7),rgba(220,170,100,0.4)));transform-origin:bottom;box-shadow:0 0 6px var(--bar-glow,rgba(180,120,60,0.3));transition:background 2s,box-shadow 2s;}
+.viz-fade{position:fixed;bottom:0;left:0;right:0;height:160px;z-index:19;background:linear-gradient(to top,rgba(240,230,210,0.7) 0%,transparent 100%);pointer-events:none;}
+</style>
+</head>
+<body>
+
+<div id="scene"></div>
+<div class="scene-overlay"></div>
+<div class="scanlines"></div>
+<div id="sceneBar" style="width:100%"></div>
+<div id="sceneLabel">🌧 rainy window</div>
+
+<div class="viz-fade"></div>
+<div id="visualizer"></div>
+
+<div class="main">
+  <!-- Live Clock -->
+  <div id="clock">00:00</div>
+  <div id="clock-date">Sunday, 01 Jan</div>
+
+  <div class="vinyl-wrap">
+    <div class="vinyl-glow" id="vinylGlow"></div>
+    <div class="vinyl spinning" id="vinyl"><div class="vinyl-center"></div></div>
+  </div>
+
+  <div class="brb-label">Back in a bit ☕</div>
+  <div class="brb-sub">chilling to lofi · be right back</div>
+
+  <div class="card">
+
+    <!-- Setup -->
+    <div class="setup" id="setupScreen">
+      <div class="setup-hint">🎵 load your lofi songs</div>
+      <div class="upload-area">
+        <input type="file" accept="audio/*" multiple id="audioInput" onchange="handleFiles(event)">
+        <div class="upload-txt">Drop your songs here</div>
+        <div class="upload-sub">MP3 / WAV · UP TO 5 · NON-COPYRIGHTED</div>
+        <div class="file-list" id="fileList"></div>
+      </div>
+      <button class="start-btn" id="startBtn" onclick="startBreak()" disabled>▶ &nbsp;START BREAK</button>
+    </div>
+
+    <!-- Playing -->
+    <div id="timerScreen" style="display:none">
+      <div class="song-bar">
+        <span class="song-icon">🎵</span>
+        <div class="song-info">
+          <div class="song-name" id="songName">—</div>
+          <div class="song-count" id="songCount">SONG 1 OF 1</div>
+        </div>
+      </div>
+      <div class="ctrls">
+        <button class="c-btn" onclick="pauseResume()" id="pauseBtn">⏸ PAUSE</button>
+        <button class="c-btn" onclick="skipSong()">⏭ SKIP</button>
+        <button class="c-btn" onclick="resetBreak()">↺ STOP</button>
+      </div>
+    </div>
+
+    <!-- Done / idle -->
+    <div id="doneScreen" style="display:none">
+      <div class="done-msg">Welcome back! 🌸</div>
+      <div class="ctrls"><button class="c-btn" onclick="resetBreak()">↺ NEW BREAK</button></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  SCENES
+// ============================================================
+const scenes = [
+  { name:'🌧 rainy window',    key:'rain',    vglow:'rgba(120,160,200,0.45)', bar:'linear-gradient(to top,rgba(120,160,200,0.8),rgba(160,200,230,0.4))', glow:'rgba(120,160,200,0.4)' },
+  { name:'☕ cozy cafe',       key:'cafe',    vglow:'rgba(200,150,80,0.45)',  bar:'linear-gradient(to top,rgba(200,150,80,0.8),rgba(230,190,120,0.4))',  glow:'rgba(200,150,80,0.4)'  },
+  { name:'🌅 city rooftop',    key:'rooftop', vglow:'rgba(220,120,50,0.45)',  bar:'linear-gradient(to top,rgba(220,100,40,0.8),rgba(240,160,80,0.4))',   glow:'rgba(220,100,40,0.4)'  },
+  { name:'🌸 japanese street', key:'japan',   vglow:'rgba(220,140,160,0.45)', bar:'linear-gradient(to top,rgba(220,120,150,0.8),rgba(240,170,190,0.4))', glow:'rgba(220,120,150,0.4)' },
+];
+
+let currentScene=0, sceneSecondsLeft=30;
+
+function rand(a,b){return a+Math.random()*(b-a);}
+function randInt(a,b){return Math.floor(rand(a,b));}
+
+function makeRain(el,cls,count){
+  const rc=document.createElement('div');rc.style.cssText='position:absolute;inset:0;overflow:hidden;pointer-events:none;';
+  for(let i=0;i<count;i++){
+    const d=document.createElement('div');d.className=cls;
+    d.style.cssText=`--rd:${rand(0.5,1.4)}s;--rdelay:${rand(0,4)}s;--rl:${rand(0,100)}%;--rh:${randInt(14,32)}px;`;
+    rc.appendChild(d);
+  }
+  el.appendChild(rc);
+}
+
+// --- SCENE 1: Rainy Window ---
+function buildRain(el){
+  el.className='s-rain';el.style.cssText='position:absolute;inset:0;';
+  // Sky
+  const sky=document.createElement('div');sky.className='rw-sky';el.appendChild(sky);
+  // Clouds
+  for(let i=0;i<5;i++){
+    const c=document.createElement('div');c.className='rw-cloud';
+    c.style.cssText=`position:absolute;top:${rand(5,35)}%;width:${rand(200,500)}px;height:${rand(40,80)}px;--cd:${rand(60,120)}s;--cdelay:${rand(-80,0)}s;`;
+    el.appendChild(c);
+  }
+  // Buildings
+  for(let i=0;i<16;i++){
+    const b=document.createElement('div');b.className='rw-building';
+    const w=randInt(55,110),h=randInt(100,260);
+    b.style.cssText=`position:absolute;bottom:100px;left:${i*6.5}%;width:${w}px;height:${h}px;background:#8090a0;border:1px solid rgba(255,255,255,0.1);`;
+    for(let r=0;r<Math.floor(h/22);r++){
+      for(let c=0;c<Math.floor(w/18);c++){
+        if(Math.random()>0.5){
+          const wl=document.createElement('div');wl.className='rw-win';
+          wl.style.cssText=`left:${4+c*16}px;bottom:${8+r*20}px;width:8px;height:10px;--wb:${rand(2,9)}s;--wbd:${rand(0,5)}s;`;
+          b.appendChild(wl);
+        }
+      }
+    }
+    el.appendChild(b);
+  }
+  // Road
+  const road=document.createElement('div');road.className='rw-road';el.appendChild(road);
+  const rl=document.createElement('div');rl.className='rw-road-line';el.appendChild(rl);
+  // Puddles
+  for(let i=0;i<4;i++){
+    const p=document.createElement('div');p.className='rw-puddle';
+    p.style.cssText=`position:absolute;bottom:${rand(5,90)}px;left:${rand(5,80)}%;width:${rand(70,150)}px;height:${rand(12,25)}px;`;
+    el.appendChild(p);
+  }
+  // Window frame
+  const f=document.createElement('div');f.className='rw-frame';
+  f.innerHTML=`<div class="rw-frame-h"></div><div class="rw-frame-v"></div><div class="rw-frame-border"></div>`;
+  el.appendChild(f);
+  // Sill items
+  el.innerHTML+=`<div class="rw-sill"></div><div class="rw-plant">🪴</div><div class="rw-mug">☕</div>`;
+  makeRain(el,'rw-drop',130);
+}
+
+// --- SCENE 2: Cozy Cafe ---
+function buildCafe(el){
+  el.className='s-cafe';el.style.cssText='position:absolute;inset:0;';
+  el.innerHTML+=`<div class="cafe-wall-tex" style="position:absolute;inset:0;"></div><div class="cafe-warm" style="position:absolute;inset:0;"></div>`;
+  // Fairy lights
+  const fl=document.createElement('div');fl.style.cssText='position:absolute;top:55px;left:0;right:0;height:30px;';
+  const line=document.createElement('div');line.className='fairy-line';line.style.cssText='position:absolute;top:6px;left:0;right:0;';fl.appendChild(line);
+  for(let i=0;i<35;i++){
+    const b=document.createElement('div');b.className='fairy-bulb';
+    b.style.cssText=`position:absolute;left:${i*2.9}%;top:${2+Math.sin(i*0.6)*4}px;width:7px;height:7px;--ff:${rand(1,4)}s;--fd:${rand(0,3)}s;`;
+    fl.appendChild(b);
+  }
+  el.appendChild(fl);
+  // Windows
+  for(let w=0;w<2;w++){
+    const wo=document.createElement('div');wo.className='cafe-win-outer';
+    wo.style.cssText=`position:absolute;left:${15+w*45}%;top:90px;width:240px;height:180px;background:rgba(180,140,90,0.9);border-radius:4px;padding:10px;`;
+    const wi=document.createElement('div');wi.style.cssText='width:100%;height:100%;border-radius:2px;overflow:hidden;position:relative;background:linear-gradient(180deg,#7090a8,#90aabb);';
+    for(let i=0;i<8;i++){
+      const mb=document.createElement('div');
+      mb.style.cssText=`position:absolute;bottom:0;left:${i*13}%;width:${randInt(20,35)}px;height:${randInt(50,110)}px;background:#4a5a6a;`;
+      wi.appendChild(mb);
+    }
+    for(let i=0;i<35;i++){
+      const dr=document.createElement('div');dr.className='cafe-win-rain-drop';
+      dr.style.cssText=`--rd:${rand(0.4,1)}s;--rdelay:${rand(0,2)}s;--rl:${rand(0,100)}%;--rh:${randInt(10,22)}px;`;
+      wi.appendChild(dr);
+    }
+    wo.appendChild(wi);el.appendChild(wo);
+  }
+  // Bookshelf
+  const bs=document.createElement('div');bs.style.cssText='position:absolute;right:50px;top:110px;';
+  const bColors=['#c0392b','#2980b9','#27ae60','#8e44ad','#e67e22','#1abc9c','#e74c3c'];
+  for(let s=0;s<3;s++){
+    const shelf=document.createElement('div');shelf.style.cssText=`position:absolute;top:${s*55}px;width:110px;height:8px;background:#8a5c30;box-shadow:0 2px 6px rgba(0,0,0,0.2);`;
+    let bx=2;
+    while(bx<100){const bw=randInt(10,18),bh=randInt(32,46);const bk=document.createElement('div');bk.style.cssText=`position:absolute;bottom:8px;left:${bx}px;width:${bw}px;height:${bh}px;background:${bColors[randInt(0,bColors.length)]};opacity:0.85;border-radius:1px 0 0 1px;`;shelf.appendChild(bk);bx+=bw+1;}
+    bs.appendChild(shelf);
+  }
+  el.appendChild(bs);
+  // Table
+  const table=document.createElement('div');table.className='cafe-table';
+  table.style.cssText='position:absolute;bottom:0;left:0;right:0;height:70px;background:linear-gradient(180deg,#c8a060,#a07838);border-radius:4px 4px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,0.15);';
+  el.appendChild(table);
+  // Cups
+  for(let i=0;i<2;i++){
+    const cup=document.createElement('div');cup.style.cssText=`position:absolute;bottom:70px;left:${25+i*45}%;`;
+    cup.innerHTML=`<div style="width:38px;height:32px;background:linear-gradient(180deg,#f8f0e0,#e8d8c0);border-radius:0 0 8px 8px;border:2px solid #c8b090;position:relative;"><div style="position:absolute;right:-11px;top:7px;width:13px;height:14px;border:2.5px solid #c8b090;border-radius:0 8px 8px 0;border-left:none;"></div></div><div style="width:50px;height:7px;background:#e8d8c0;border-radius:50%;margin-top:-2px;margin-left:-6px;"></div>`;
+    for(let s=0;s<3;s++){const st=document.createElement('div');st.className='steam-p';st.style.cssText=`position:absolute;bottom:32px;left:${7+s*9}px;height:18px;--sd:${s*0.4}s;`;cup.appendChild(st);}
+    el.appendChild(cup);
+  }
+}
+
+// --- SCENE 3: City Rooftop (Dusk) ---
+function buildRooftop(el){
+  el.className='s-rooftop';el.style.cssText='position:absolute;inset:0;';
+  // Sun
+  const sun=document.createElement('div');sun.className='rt-sun';
+  sun.style.cssText='position:absolute;width:90px;height:90px;top:60px;left:50%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,#fff8d0,#ffcc44,#ff8800);box-shadow:0 0 80px rgba(255,180,50,0.7),0 0 160px rgba(255,140,30,0.3);';
+  el.appendChild(sun);
+  // Clouds
+  for(let i=0;i<4;i++){
+    const c=document.createElement('div');c.className='rt-cloud';
+    c.style.cssText=`position:absolute;top:${rand(5,40)}%;width:${rand(200,400)}px;height:${rand(35,70)}px;--cd:${rand(50,90)}s;--cdelay:${rand(-70,0)}s;`;
+    el.appendChild(c);
+  }
+  // Silhouette skyline
+  for(let i=0;i<22;i++){
+    const b=document.createElement('div');b.className='rt-building';
+    const w=randInt(40,100),h=randInt(80,260);
+    b.style.cssText=`position:absolute;bottom:80px;left:${i*4.8}%;width:${w}px;height:${h}px;background:#1a0808;`;
+    // lit windows
+    for(let r=0;r<Math.floor(h/20);r++){
+      for(let c=0;c<Math.floor(w/15);c++){
+        if(Math.random()>0.65){
+          const wl=document.createElement('div');wl.className='rt-win';
+          wl.style.cssText=`position:absolute;left:${4+c*13}px;bottom:${7+r*18}px;width:6px;height:8px;background:rgba(255,200,100,0.8);--wb:${rand(2,8)}s;--wbd:${rand(0,5)}s;`;
+          b.appendChild(wl);
+        }
+      }
+    }
+    el.appendChild(b);
+  }
+  const floor=document.createElement('div');floor.className='rt-floor';floor.style.cssText='position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(180deg,#2a1810,#180c08);';el.appendChild(floor);
+  const edge=document.createElement('div');edge.className='rt-edge';edge.style.cssText='position:absolute;bottom:78px;left:0;right:0;height:5px;background:#3a2418;';el.appendChild(edge);
+  // Antennas
+  for(let i=0;i<6;i++){const a=document.createElement('div');const h=randInt(25,65);a.style.cssText=`position:absolute;bottom:83px;left:${randInt(5,90)}%;`;a.innerHTML=`<div style="width:3px;height:${h}px;background:#100808;"></div><div style="position:absolute;top:${randInt(5,18)}px;left:-9px;width:20px;height:2px;background:#100808;"></div>`;el.appendChild(a);}
+  makeRain(el,'rt-drop',70);
+}
+
+// --- SCENE 4: Japanese Street (Day) ---
+function buildJapan(el){
+  el.className='s-japan';el.style.cssText='position:absolute;inset:0;';
+  // Sky
+  const sky=document.createElement('div');sky.className='jp-sky';sky.style.cssText='position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg,#7aaac8 0%,#a8ccde 50%,#c8e0f0 100%);';el.appendChild(sky);
+  // Mount Fuji silhouette
+  const mt=document.createElement('div');mt.style.cssText='position:absolute;top:15%;right:10%;width:0;height:0;border-left:140px solid transparent;border-right:140px solid transparent;border-bottom:100px solid rgba(180,200,220,0.5);';
+  const mtSnow=document.createElement('div');mtSnow.style.cssText='position:absolute;top:15%;right:10%;margin-right:-20px;margin-top:-0px;width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-bottom:35px solid rgba(255,255,255,0.9);';
+  el.appendChild(mt);el.appendChild(mtSnow);
+  // Clouds
+  for(let i=0;i<5;i++){const c=document.createElement('div');c.className='jp-cloud';c.style.cssText=`position:absolute;top:${rand(5,30)}%;width:${rand(150,350)}px;height:${rand(25,55)}px;--cd:${rand(60,110)}s;--cdelay:${rand(-80,0)}s;`;el.appendChild(c);}
+  // Road
+  const road=document.createElement('div');road.style.cssText='position:absolute;bottom:0;left:0;right:0;height:150px;background:linear-gradient(180deg,#b8c0b0,#a0a898);';el.appendChild(road);
+  const roadLine=document.createElement('div');roadLine.style.cssText='position:absolute;bottom:75px;left:0;right:0;height:2px;background:rgba(255,255,255,0.2);';el.appendChild(roadLine);
+  // Buildings
+  for(let i=0;i<7;i++){
+    const b=document.createElement('div');
+    const w=randInt(80,140),h=randInt(140,260);
+    b.style.cssText=`position:absolute;bottom:150px;left:${i*15}%;width:${w}px;height:${h}px;background:#c8c0b0;border:1px solid rgba(100,80,60,0.2);`;
+    // Roof
+    const roof=document.createElement('div');
+    roof.style.cssText=`position:absolute;bottom:${h}px;left:-10px;width:0;height:0;border-left:${w/2+10}px solid transparent;border-right:${w/2+10}px solid transparent;border-bottom:30px solid #808060;`;
+    b.appendChild(roof);
+    for(let r=0;r<Math.floor(h/20);r++){for(let c=0;c<Math.floor(w/18);c++){if(Math.random()>0.45){const wl=document.createElement('div');wl.style.cssText=`position:absolute;left:${4+c*16}px;bottom:${8+r*18}px;width:8px;height:10px;background:rgba(200,220,240,0.7);border:1px solid rgba(100,130,160,0.3);`;b.appendChild(wl);}}}
+    el.appendChild(b);
+  }
+  // Torii
+  const torii=document.createElement('div');torii.style.cssText='position:absolute;bottom:150px;right:18%;';
+  torii.innerHTML=`<div style="position:absolute;bottom:0;left:0;width:10px;height:110px;background:#c0392b;border-radius:2px 2px 0 0;"></div><div style="position:absolute;bottom:0;left:80px;width:10px;height:110px;background:#c0392b;border-radius:2px 2px 0 0;"></div><div style="position:absolute;bottom:105px;left:-12px;width:114px;height:10px;background:#c0392b;border-radius:2px;"></div><div style="position:absolute;bottom:90px;left:-2px;width:94px;height:8px;background:#c0392b;border-radius:1px;"></div>`;
+  el.appendChild(torii);
+  // Trees
+  for(let i=0;i<6;i++){const t=document.createElement('div');t.style.cssText=`position:absolute;bottom:${140+randInt(0,20)}px;left:${5+i*16}%;font-size:${randInt(36,55)}px;animation:treeSway ${rand(3,6)}s ease-in-out infinite;animation-delay:${rand(0,3)}s;transform-origin:bottom center;`;t.textContent='🌲';el.appendChild(t);}
+  // Lanterns
+  for(let i=0;i<5;i++){const l=document.createElement('div');l.style.cssText=`position:absolute;bottom:${rand(180,280)}px;left:${rand(5,80)}%;animation:lanternSway ${rand(3,5)}s ease-in-out infinite;animation-delay:${rand(0,3)}s;transform-origin:top center;`;l.innerHTML=`<div style="width:1px;height:15px;background:rgba(100,60,30,0.4);margin:0 auto;"></div><div style="width:16px;height:22px;border-radius:50%;background:radial-gradient(circle,rgba(255,100,80,0.95),rgba(200,40,40,0.8));box-shadow:0 0 12px rgba(255,80,60,0.5);margin-top:-2px;"></div>`;el.appendChild(l);}
+  // Sakura
+  for(let i=0;i<18;i++){const s=document.createElement('div');s.className='jp-petal';s.textContent='🌸';s.style.cssText=`--pd:${rand(5,12)}s;--pdelay:${rand(0,10)}s;--pl:${rand(0,95)}%;--ps:${rand(14,22)}px;position:absolute;top:-30px;left:var(--pl);font-size:var(--ps);animation:petalFall var(--pd) ease-in infinite;animation-delay:var(--pdelay);opacity:0;`;el.appendChild(s);}
+  makeRain(el,'jp-drop-day',80);
+}
+
+function buildScene(key){
+  const el=document.createElement('div');el.style.cssText='position:absolute;inset:0;';
+  if(key==='rain') buildRain(el);
+  else if(key==='cafe') buildCafe(el);
+  else if(key==='rooftop') buildRooftop(el);
+  else buildJapan(el);
+  return el;
+}
+
+function showScene(idx){
+  const sceneEl=document.getElementById('scene');
+  sceneEl.style.opacity='0';
+  setTimeout(()=>{
+    sceneEl.innerHTML='';
+    sceneEl.appendChild(buildScene(scenes[idx].key));
+    sceneEl.style.opacity='1';
+    document.getElementById('sceneLabel').textContent=scenes[idx].name;
+    applyTheme(scenes[idx]);
+  },900);
+}
+
+// ============================================================
+//  CLOCK
+// ============================================================
+function updateClock(){
+  const now=new Date();
+  let h=now.getHours(),m=now.getMinutes(),s=now.getSeconds();
+  const ampm=h>=12?'PM':'AM';
+  h=h%12||12;
+  document.getElementById('clock').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('clock-date').textContent=`${days[now.getDay()]}, ${String(now.getDate()).padStart(2,'0')} ${months[now.getMonth()]} · ${ampm}`;
+}
+updateClock();setInterval(updateClock,1000);
+
+// ============================================================
+//  VISUALIZER
+// ============================================================
+const vizEl=document.getElementById('visualizer');
+const BAR_COUNT=60;const bars=[];
+for(let i=0;i<BAR_COUNT;i++){const b=document.createElement('div');b.className='bar';vizEl.appendChild(b);bars.push(b);}
+let idleT=0,animFrame=null;
+
+function applyTheme(s){
+  document.getElementById('vinylGlow').style.setProperty('--vglow',s.vglow);
+  bars.forEach(b=>{b.style.setProperty('--bar-color',s.bar);b.style.setProperty('--bar-glow',s.glow);});
+}
+
+function drawViz(){
+  animFrame=requestAnimationFrame(drawViz);
+  if(!window._analyser){
+    idleT+=0.04;
+    bars.forEach((b,i)=>{const h=Math.max(3,9+Math.sin(idleT+i*0.3)*6+Math.sin(idleT*0.5+i*0.18)*4);b.style.height=h+'px';});
+    return;
+  }
+  const data=new Uint8Array(window._analyser.frequencyBinCount);
+  window._analyser.getByteFrequencyData(data);
+  const step=Math.floor(data.length/BAR_COUNT);
+  bars.forEach((b,i)=>{const val=data[i*step]||0;b.style.height=Math.max(3,(val/255)*115)+'px';});
+}
+
+// ============================================================
+//  SCENE ROTATION
+// ============================================================
+let sceneInterval=null;
+function startSceneRotation(){
+  sceneSecondsLeft=30;updateSceneBar();
+  sceneInterval=setInterval(()=>{
+    if(!paused){
+      sceneSecondsLeft--;updateSceneBar();
+      if(sceneSecondsLeft<=0){currentScene=(currentScene+1)%scenes.length;showScene(currentScene);sceneSecondsLeft=30;}
+    }
+  },1000);
+}
+function updateSceneBar(){document.getElementById('sceneBar').style.width=(sceneSecondsLeft/30*100)+'%';}
+
+// ============================================================
+//  AUDIO
+// ============================================================
+let audioCtx=null,audioFiles=[],currentIdx=0,paused=false,inputMins=5;
+
+function initAudio(){
+  if(!audioCtx){
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const analyser=audioCtx.createAnalyser();
+    analyser.fftSize=128;analyser.smoothingTimeConstant=0.82;
+    analyser.connect(audioCtx.destination);
+    window._analyser=analyser;
+  }
+}
+
+function handleFiles(e){
+  audioFiles=Array.from(e.target.files).slice(0,5);
+  const fl=document.getElementById('fileList');fl.innerHTML='';
+  audioFiles.forEach((f,i)=>{const d=document.createElement('div');d.className='file-item';d.textContent=`${i+1}. ${f.name.replace(/\.[^/.]+$/,'')}`;fl.appendChild(d);});
+  document.getElementById('startBtn').disabled=audioFiles.length===0;
+}
+
+function startBreak(){
+  if(!audioFiles.length)return;
+  initAudio();paused=false;currentIdx=0;
+  document.getElementById('setupScreen').style.display='none';
+  document.getElementById('timerScreen').style.display='block';
+  document.getElementById('doneScreen').style.display='none';
+  playTrack(0);
+  startSceneRotation();
+}
+
+function playTrack(idx){
+  if(window._source){try{window._source.disconnect();}catch(e){}}
+  if(idx>=audioFiles.length)idx=0;
+  currentIdx=idx;
+  document.getElementById('songName').textContent=audioFiles[idx].name.replace(/\.[^/.]+$/,'');
+  document.getElementById('songCount').textContent=`SONG ${idx+1} OF ${audioFiles.length}`;
+  document.getElementById('vinyl').className='vinyl spinning';
+  const url=URL.createObjectURL(audioFiles[idx]);
+  const audio=new Audio(url);audio.crossOrigin='anonymous';
+  audio.onended=()=>{if(!paused)playTrack((currentIdx+1)%audioFiles.length);};
+  const src=audioCtx.createMediaElementSource(audio);
+  src.connect(window._analyser);window._source=src;
+  if(!paused)audio.play().catch(()=>{});
+  if(window._currentAudio){try{window._currentAudio.pause();URL.revokeObjectURL(window._currentAudio.src);}catch(e){}}
+  window._currentAudio=audio;
+}
+
+function skipSong(){playTrack((currentIdx+1)%audioFiles.length);}
+
+function pauseResume(){
+  paused=!paused;
+  document.getElementById('pauseBtn').textContent=paused?'▶ RESUME':'⏸ PAUSE';
+  if(window._currentAudio){if(paused){window._currentAudio.pause();document.getElementById('vinyl').className='vinyl';}else{window._currentAudio.play().catch(()=>{});document.getElementById('vinyl').className='vinyl spinning';}}
+}
+
+function resetBreak(){
+  clearInterval(sceneInterval);
+  if(window._currentAudio){try{window._currentAudio.pause();}catch(e){}}
+  document.getElementById('setupScreen').style.display='flex';
+  document.getElementById('timerScreen').style.display='none';
+  document.getElementById('doneScreen').style.display='none';
+  document.getElementById('vinyl').className='vinyl spinning';
+  currentScene=0;showScene(0);
+  document.getElementById('sceneBar').style.width='100%';
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+showScene(0);applyTheme(scenes[0]);drawViz();
+
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'&&document.getElementById('timerScreen').style.display!=='none'){e.preventDefault();pauseResume();}
+});
+</script>
+</body>
+</html>
